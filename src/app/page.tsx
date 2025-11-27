@@ -38,11 +38,8 @@ export default function LandingPage() {
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-2">
             <nav className="flex items-center space-x-2">
-                <Button variant="ghost" asChild>
-                    <Link href="/login?tab=client">Portal Cliente</Link>
-                </Button>
                 <Button asChild>
-                    <Link href="/login?tab=admin">Portal Admin</Link>
+                    <Link href="/login">Acceder a mi portal</Link>
                 </Button>
             </nav>
           </div>
@@ -72,7 +69,7 @@ export default function LandingPage() {
                 </p>
                 <div className="mt-10">
                     <Button size="lg" asChild>
-                        <Link href="/login?tab=client">Acceder a mi portal</Link>
+                        <Link href="/login">Acceder a mi portal</Link>
                     </Button>
                 </div>
             </div>
@@ -112,7 +109,7 @@ export default function LandingPage() {
                 </p>
                 <div className="mt-8">
                     <Button size="lg" asChild>
-                        <Link href="/login?tab=client">Iniciar Sesión</Link>
+                        <Link href="/login">Iniciar Sesión</Link>
                     </Button>
                 </div>
             </div>

@@ -50,7 +50,7 @@ export function ClientLoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="email"
@@ -77,15 +77,15 @@ export function ClientLoginForm() {
             </FormItem>
           )}
         />
+        <div className="text-right text-sm">
+          <Link href="/forgot-password" className="underline text-muted-foreground hover:text-primary">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
         </Button>
-        <div className="text-center text-sm">
-          <Link href="/forgot-password" className="underline text-muted-foreground hover:text-foreground">
-            ¿Olvidaste tu contraseña?
-          </Link>
-        </div>
       </form>
     </Form>
   );

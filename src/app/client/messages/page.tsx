@@ -16,11 +16,11 @@ export default function ClientMessagesPage() {
                     <div className="h-96 border rounded-md p-4 bg-muted/50 overflow-y-auto flex flex-col gap-4">
                        <div className="p-3 rounded-lg bg-background max-w-[80%] self-start">
                          <p className="font-bold text-sm">Admin</p>
-                         <p>Good morning! Of course, let me check that for you. Can you confirm your case number?</p>
+                         <p>¡Buenos días! Por supuesto, déjame revisar eso por ti. ¿Puedes confirmar tu número de caso?</p>
                        </div>
                        <div className="p-3 rounded-lg bg-primary text-primary-foreground max-w-[80%] self-end">
                          <p className="font-bold text-sm">Usted</p>
-                         <p>Yes, it's C-12345.</p>
+                         <p>Sí, es C-12345.</p>
                        </div>
                     </div>
                 </CardContent>

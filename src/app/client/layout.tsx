@@ -37,7 +37,7 @@ export default function ClientLayout({
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="shrink-0 md:hidden">
               <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
+              <span className="sr-only">Menú de navegación</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
@@ -63,7 +63,7 @@ export default function ClientLayout({
                     <AvatarImage src="https://picsum.photos/seed/client/100/100" data-ai-hint="company building" />
                     <AvatarFallback>TI</AvatarFallback>
                 </Avatar>
-                <span className="sr-only">Toggle user menu</span>
+                <span className="sr-only">Menú de usuario</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

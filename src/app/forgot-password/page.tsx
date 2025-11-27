@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    // TODO: Implement Supabase password reset
+    // TODO: Implementar reseteo de contraseña de Supabase
     console.log(values);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);

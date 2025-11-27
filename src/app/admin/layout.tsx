@@ -58,7 +58,7 @@ export default function AdminLayout({
                         <AvatarFallback>AD</AvatarFallback>
                     </Avatar>
                     <div className="text-left">
-                        <p className="text-sm font-medium">Admin User</p>
+                        <p className="text-sm font-medium">Usuario Admin</p>
                         <p className="text-xs text-muted-foreground/80">Superadmin</p>
                     </div>
                 </Button>

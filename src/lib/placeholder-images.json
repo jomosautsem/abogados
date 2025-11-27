@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "login-background",
-      "description": "A modern and professional law office interior.",
+      "description": "Un interior de oficina de abogados moderno y profesional.",
       "imageUrl": "https://images.unsplash.com/photo-1562564055-71e051d33c19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsYXclMjBvZmZpY2V8ZW58MHx8fHwxNzY0MjA5MjE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "law office"
+      "imageHint": "oficina de abogados"
     }
   ]
 }

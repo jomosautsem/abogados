@@ -37,7 +37,7 @@ export function ClientLoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    // TODO: Implement Supabase client login server action
+    // TODO: Implementar acción de servidor de inicio de sesión de cliente de Supabase
     console.log(values);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);

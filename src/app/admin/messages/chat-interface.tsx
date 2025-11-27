@@ -9,7 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Wand2, Loader2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 
-const mockMessages = "Client: Hello, I have a question about my case status. \n\nAdmin: Good morning! Of course, let me check that for you. Can you confirm your case number? \n\nClient: Yes, it's C-12345. \n\nAdmin: Thank you. I see your case is currently in the discovery phase. We are expecting to receive documents from the opposing counsel by the end of next week. \n\nClient: Great, thank you for the update!";
+const mockMessages = "Cliente: Hola, tengo una pregunta sobre el estado de mi caso. \n\nAdmin: ¡Buenos días! Por supuesto, déjame revisar eso por ti. ¿Puedes confirmar tu número de caso? \n\nCliente: Sí, es C-12345. \n\nAdmin: Gracias. Veo que su caso se encuentra actualmente en la fase de descubrimiento. Esperamos recibir los documentos de la parte contraria a finales de la próxima semana. \n\nCliente: Genial, gracias por la actualización.";
 
 export function ChatInterface() {
     const { toast } = useToast();

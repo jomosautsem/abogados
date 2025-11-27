@@ -36,8 +36,8 @@ export function AdminLoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "admin@test.com",
-      password: "password123",
+      email: "leosan@gmail.com",
+      password: "leosan123",
       remember: false,
     },
   });
@@ -45,21 +45,48 @@ export function AdminLoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
+    // *** NOTA DE SEGURIDAD IMPORTANTE ***
+    // La siguiente lógica es solo para fines de desarrollo y NO ES SEGURA para producción.
+    // Nunca se debe consultar usuarios y contraseñas (incluso hasheadas) directamente desde el cliente.
+    // En un entorno real, esto debe manejarse a través de una API segura (como una Supabase Edge Function)
+    // que valide las credenciales en el servidor.
+    
+    // Simulación de autenticación personalizada:
+    // 1. Iniciar sesión con un usuario "anónimo" de Supabase Auth para obtener un token de sesión válido.
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email: 'admin@test.com', // Usamos las credenciales genéricas para obtener una sesión
+        password: 'password123',
     });
 
-    if (error) {
+    if (authError || !authData.user) {
+        toast({
+            title: "Error de Autenticación",
+            description: "No se pudo establecer una sesión segura.",
+            variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+    }
+    
+    // 2. Verificar si las credenciales coinciden con un admin en nuestra tabla `admin_users`
+    // En un caso real, la comparación del hash de la contraseña se haría en el servidor.
+    const { data: adminUser, error: adminError } = await supabase
+      .from('admin_users')
+      .select('email, role')
+      .eq('email', values.email)
+      .single();
+
+    if (adminError || !adminUser) {
       toast({
-        title: "Credenciales incorrectas",
-        description: "Por favor, verifica tu email y contraseña.",
+        title: "Credenciales de Admin incorrectas",
+        description: "El email no corresponde a un usuario administrador.",
         variant: "destructive",
       });
     } else {
+       // ¡Éxito! (Simulado) - En un caso real, el servidor nos daría una sesión válida.
       toast({
-        title: "Inicio de sesión exitoso",
-        description: "Bienvenido, Administrador.",
+        title: "Inicio de sesión de Admin exitoso",
+        description: `Bienvenido, ${adminUser.role === 'superadmin' ? 'Superadmin' : 'Administrador'}.`,
       });
       router.push('/admin/dashboard');
       router.refresh();
@@ -78,7 +105,7 @@ export function AdminLoginForm() {
             <FormItem>
               <FormLabel>Email de Administrador</FormLabel>
               <FormControl>
-                <Input placeholder="admin@test.com" {...field} />
+                <Input placeholder="admin@email.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

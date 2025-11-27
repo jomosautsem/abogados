@@ -67,6 +67,11 @@ export default function LandingPage() {
                 <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground">
                     Bienvenido a Estrategias Juridicas, la plataforma donde la claridad y la eficiencia se encuentran. Gestione sus casos, documentos y comunicación con nuestro bufete de manera fácil y segura.
                 </p>
+                <div className="mt-8">
+                    <Button size="lg" asChild>
+                        <Link href="/login">Iniciar Sesión</Link>
+                    </Button>
+                </div>
             </div>
         </section>
 

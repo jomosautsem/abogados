@@ -2,7 +2,7 @@ import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, S
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Users, Briefcase, FileText, MessageSquare, LogOut, Settings } from "lucide-react";
+import { Home, Users, Briefcase, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 
@@ -30,16 +30,6 @@ export default function AdminLayout({
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Clientes">
                 <Link href="/admin/clients"><Briefcase /><span>Clientes</span></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Tareas">
-                <Link href="/admin/tasks"><FileText /><span>Tareas</span></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Mensajes">
-                <Link href="/admin/messages"><MessageSquare /><span>Mensajes</span></Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>

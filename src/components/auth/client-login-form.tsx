@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 export function ClientLoginForm() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,15 +39,23 @@ export function ClientLoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    // TODO: Implementar acción de servidor de inicio de sesión de cliente de Supabase
-    console.log(values);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    if (values.email === "client@test.com" && values.password === "password123") {
+      toast({
+        title: "Inicio de sesión exitoso",
+        description: "Bienvenido a tu portal.",
+      });
+      router.push('/client/dashboard');
+    } else {
+      toast({
+        title: "Credenciales incorrectas",
+        description: "Por favor, verifica tu email y contraseña.",
+        variant: "destructive",
+      });
+    }
+
     setIsLoading(false);
-    toast({
-      title: "Función no implementada",
-      description: "El inicio de sesión del cliente se conectará a Supabase Auth.",
-      variant: "destructive",
-    });
   }
 
   return (

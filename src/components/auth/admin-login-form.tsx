@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
@@ -25,6 +26,7 @@ const formSchema = z.object({
 export function AdminLoginForm() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,15 +38,22 @@ export function AdminLoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    // TODO: Implementar acción de servidor de inicio de sesión de administrador personalizada
-    console.log(values);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    if (values.email === "admin@test.com" && values.password === "password123") {
+      toast({
+        title: "Inicio de sesión exitoso",
+        description: "Bienvenido, Administrador.",
+      });
+      router.push('/admin/dashboard');
+    } else {
+      toast({
+        title: "Credenciales incorrectas",
+        description: "Por favor, verifica tu email y contraseña.",
+        variant: "destructive",
+      });
+    }
     setIsLoading(false);
-    toast({
-      title: "Función no implementada",
-      description: "El inicio de sesión del administrador necesita una tabla de `admin_users`.",
-      variant: "destructive",
-    });
   }
 
   return (
@@ -57,7 +66,7 @@ export function AdminLoginForm() {
             <FormItem>
               <FormLabel>Email de Administrador</FormLabel>
               <FormControl>
-                <Input placeholder="admin@bufete.com" {...field} />
+                <Input placeholder="admin@test.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

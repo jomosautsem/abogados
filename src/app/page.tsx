@@ -63,7 +63,7 @@ export default function LandingPage() {
             )}
             <div className="container relative text-center">
                 <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                    Su Portal de Gestión Legal, Simplificado.
+                    Su Portal de Gestión Legal.
                 </h1>
                 <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground">
                     Bienvenido a Estrategias Juridicas, la plataforma donde la claridad y la eficiencia se encuentran. Gestione sus casos, documentos y comunicación con nuestro bufete de manera fácil y segura.

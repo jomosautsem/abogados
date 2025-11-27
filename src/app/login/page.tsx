@@ -21,7 +21,7 @@ function LoginPageContent() {
             <Link href="/" className="inline-block">
                 <Logo className="w-12 h-12 mx-auto" />
             </Link>
-            <h1 className="font-headline text-3xl font-bold mt-4">LexSphere Hub</h1>
+            <h1 className="font-headline text-3xl font-bold mt-4">Estrategias Juridicas</h1>
             <p className="text-muted-foreground">Bienvenido de nuevo.</p>
         </div>
         <Card>

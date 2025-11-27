@@ -17,7 +17,7 @@ export default function AdminLayout({
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Logo className="w-8 h-8" />
-            <h1 className="font-headline text-xl font-bold text-sidebar-foreground">LexSphere</h1>
+            <h1 className="font-headline text-xl font-bold text-sidebar-foreground">Estrategias Juridicas</h1>
           </div>
         </SidebarHeader>
         <SidebarContent>

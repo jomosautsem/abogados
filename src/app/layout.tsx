@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'LexSphere Hub',
+  title: 'Estrategias Juridicas',
   description: 'Portal de Gestión para Bufete de Abogados',
 };
 

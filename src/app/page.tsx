@@ -34,7 +34,7 @@ export default function LandingPage() {
         <div className="container flex h-14 items-center">
           <Link href="#" className="flex items-center gap-2 mr-6">
             <Logo className="w-8 h-8" />
-            <span className="font-headline text-xl font-bold">LexSphere Hub</span>
+            <span className="font-headline text-xl font-bold">Estrategias Juridicas</span>
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-2">
             <nav className="flex items-center space-x-2">
@@ -68,7 +68,7 @@ export default function LandingPage() {
                     Su Portal de Gestión Legal, Simplificado.
                 </h1>
                 <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground">
-                    Bienvenido a LexSphere Hub, la plataforma donde la claridad y la eficiencia se encuentran. Gestione sus casos, documentos y comunicación con nuestro bufete de manera fácil y segura.
+                    Bienvenido a Estrategias Juridicas, la plataforma donde la claridad y la eficiencia se encuentran. Gestione sus casos, documentos y comunicación con nuestro bufete de manera fácil y segura.
                 </p>
                 <div className="mt-10">
                     <Button size="lg" asChild>
@@ -123,11 +123,11 @@ export default function LandingPage() {
       <footer className="border-t bg-muted/50">
         <div className="container py-8 flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} LexSphere. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} Estrategias Juridicas. Todos los derechos reservados.
           </p>
            <Link href="#" className="flex items-center gap-2">
             <Logo className="w-6 h-6" />
-            <span className="font-headline text-lg font-bold">LexSphere</span>
+            <span className="font-headline text-lg font-bold">Estrategias Juridicas</span>
           </Link>
         </div>
       </footer>

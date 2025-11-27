@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -5,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menu, Home, FolderKanban, MessageSquare, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
     { href: "/client/dashboard", label: "Dashboard", icon: Home },
@@ -19,6 +22,12 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    router.push('/login');
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
@@ -71,7 +80,7 @@ export default function ClientLayout({
               <DropdownMenuSeparator />
               <DropdownMenuItem><Settings className="mr-2 h-4 w-4" />Ajustes</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem><LogOut className="mr-2 h-4 w-4" />Cerrar Sesión</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}><LogOut className="mr-2 h-4 w-4" />Cerrar Sesión</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

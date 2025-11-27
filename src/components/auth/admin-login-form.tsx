@@ -17,10 +17,13 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   password: z.string().min(1, { message: "La contraseña no puede estar vacía." }),
+  remember: z.boolean().default(false),
 });
 
 export function AdminLoginForm() {
@@ -33,6 +36,7 @@ export function AdminLoginForm() {
     defaultValues: {
       email: "",
       password: "",
+      remember: false,
     },
   });
 
@@ -85,6 +89,28 @@ export function AdminLoginForm() {
             </FormItem>
           )}
         />
+        <div className="flex items-center justify-between">
+            <FormField
+                control={form.control}
+                name="remember"
+                render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                    <FormControl>
+                    <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                    />
+                    </FormControl>
+                    <FormLabel className="font-normal">Recuérdame</FormLabel>
+                </FormItem>
+                )}
+            />
+            <div className="text-sm">
+                <Link href="/forgot-password" className="underline text-muted-foreground hover:text-primary">
+                    ¿Olvidaste tu contraseña?
+                </Link>
+            </div>
+        </div>
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isLoading ? "Iniciando sesión..." : "Iniciar Sesión como Admin"}

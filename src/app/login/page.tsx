@@ -5,56 +5,56 @@ import { Suspense } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminLoginForm } from '@/components/auth/admin-login-form';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
-import { Logo } from '@/components/logo';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { LoginGraphic } from '@/components/auth/login-graphic';
+import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
-import { ChevronLeft } from 'lucide-react';
 
 function LoginPageContent() {
   const searchParams = useSearchParams();
   const defaultTab = searchParams.get('tab') || 'client';
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-muted p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-6">
-            <Link href="/" className="inline-block">
-                <Logo className="w-12 h-12 mx-auto" />
+    <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
+      <div className="relative hidden lg:block">
+        <LoginGraphic />
+      </div>
+      <div className="flex items-center justify-center p-6 sm:p-12">
+        <div className="w-full max-w-md space-y-6">
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">Iniciar Sesión</h1>
+            <p className="mt-2 text-muted-foreground">
+              {defaultTab === 'client' ? 'Acceda a su portal de cliente.' : 'Acceda al panel de administración.'}
+            </p>
+          </div>
+        
+          <Tabs defaultValue={defaultTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="client" asChild><Link href="/login?tab=client">Portal Cliente</Link></TabsTrigger>
+                  <TabsTrigger value="admin" asChild><Link href="/login?tab=admin">Portal Admin</Link></TabsTrigger>
+              </TabsList>
+              <TabsContent value="client" className="pt-6">
+                  <ClientLoginForm />
+              </TabsContent>
+              <TabsContent value="admin" className="pt-6">
+                  <AdminLoginForm />
+              </TabsContent>
+          </Tabs>
+          <div className="text-center text-sm text-muted-foreground">
+            Al hacer clic en Iniciar Sesión, usted acepta nuestros{' '}
+            <Link href="#" className="underline hover:text-primary">
+              Términos de Servicio
+            </Link>{' '}
+            y{' '}
+            <Link href="#" className="underline hover:text-primary">
+              Política de Privacidad
             </Link>
-            <h1 className="font-headline text-3xl font-bold mt-4">Estrategias Juridicas</h1>
-            <p className="text-muted-foreground">Bienvenido de nuevo.</p>
-        </div>
-        <Card>
-            <CardHeader className="p-0 border-b">
-                <Tabs defaultValue={defaultTab} className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 rounded-t-lg rounded-b-none h-12">
-                        <TabsTrigger value="client" className="rounded-tl-lg h-full">Portal Cliente</TabsTrigger>
-                        <TabsTrigger value="admin" className="rounded-tr-lg h-full">Portal Admin</TabsTrigger>
-                    </TabsList>
-                    <CardContent className="p-6">
-                        <TabsContent value="client">
-                            <h2 className="text-xl font-semibold tracking-tight text-center mb-4">Acceso Cliente</h2>
-                            <ClientLoginForm />
-                        </TabsContent>
-                        <TabsContent value="admin">
-                             <h2 className="text-xl font-semibold tracking-tight text-center mb-4">Acceso Admin</h2>
-                            <AdminLoginForm />
-                        </TabsContent>
-                    </CardContent>
-                </Tabs>
-            </CardHeader>
-        </Card>
-        <div className="text-center mt-4">
-            <Link href="/" className="text-sm text-muted-foreground hover:text-primary inline-flex items-center">
-                <ChevronLeft className="w-4 h-4 mr-1" />
-                Volver a la página de inicio
-            </Link>
+            .
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
 
 export default function LoginPage() {
     return (

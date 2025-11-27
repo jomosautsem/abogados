@@ -5,6 +5,7 @@ import { CheckCircle2, Briefcase, MessageSquare, FolderKanban } from 'lucide-rea
 import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { DatabaseStatus } from '@/components/database-status';
 
 const features = [
     {
@@ -118,14 +119,13 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t bg-muted/50">
-        <div className="container py-8 flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Estrategias Juridicas. Todos los derechos reservados.
-          </p>
-           <Link href="#" className="flex items-center gap-2">
-            <Logo className="w-6 h-6" />
-            <span className="font-headline text-lg font-bold">Estrategias Juridicas</span>
-          </Link>
+        <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+                <p className="text-sm text-muted-foreground">
+                    &copy; {new Date().getFullYear()} Estrategias Juridicas. Todos los derechos reservados.
+                </p>
+            </div>
+            <DatabaseStatus />
         </div>
       </footer>
     </div>

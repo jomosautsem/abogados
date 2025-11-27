@@ -25,7 +25,7 @@ export default function ClientLayout({
   const router = useRouter();
 
   const handleLogout = () => {
-    router.push('/login');
+    router.push('/');
   };
 
   return (

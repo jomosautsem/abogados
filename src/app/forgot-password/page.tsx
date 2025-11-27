@@ -92,7 +92,7 @@ export default function ForgotPasswordPage() {
                     </Form>
                 )}
                  <Button variant="ghost" className="w-full mt-4" asChild>
-                    <Link href="/">
+                    <Link href="/login">
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Volver al inicio de sesión
                     </Link>

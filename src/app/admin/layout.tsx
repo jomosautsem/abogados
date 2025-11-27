@@ -1,10 +1,16 @@
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Users, Briefcase, LogOut, Settings } from "lucide-react";
+import { Home, Users, Briefcase, LogOut, Settings, Menu } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
+const navLinks = [
+    { href: "/admin/dashboard", label: "Dashboard", icon: Home },
+    { href: "/admin/clients", label: "Clientes", icon: Briefcase },
+    { href: "/admin/users", label: "Usuarios", icon: Users },
+];
 
 export default function AdminLayout({
   children,
@@ -12,66 +18,64 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2">
+    <div className="flex min-h-screen w-full flex-col">
+      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
+        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+          <Link href="/admin/dashboard" className="flex items-center gap-2 text-lg font-semibold md:text-base">
             <Logo className="w-8 h-8" />
-            <h1 className="font-headline text-xl font-bold text-sidebar-foreground">Estrategias Juridicas</h1>
-          </div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Dashboard">
-                <Link href="/admin/dashboard"><Home /><span>Dashboard</span></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Clientes">
-                <Link href="/admin/clients"><Briefcase /><span>Clientes</span></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Usuarios">
-                <Link href="/admin/users"><Users /><span>Usuarios</span></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarContent>
-        <SidebarFooter>
-           <DropdownMenu>
+            <span className="font-headline text-xl">Estrategias Juridicas</span>
+          </Link>
+          {navLinks.map(link => (
+             <Link key={link.href} href={link.href} className="text-muted-foreground transition-colors hover:text-foreground">
+                {link.label}
+            </Link>
+          ))}
+        </nav>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Menú de navegación</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <nav className="grid gap-6 text-lg font-medium">
+              <Link href="#" className="flex items-center gap-2 text-lg font-semibold mb-4">
+                <Logo className="w-8 h-8" />
+                <span className="font-headline text-xl">Estrategias Juridicas</span>
+              </Link>
+              {navLinks.map(link => (
+                <Link key={link.href} href={link.href} className="flex items-center gap-4 text-muted-foreground hover:text-foreground">
+                    <link.icon className="h-5 w-5" />
+                    {link.label}
+                </Link>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
+        <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="w-full justify-start gap-2 p-2 h-auto text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src="https://picsum.photos/seed/admin/100/100" data-ai-hint="person face" />
                         <AvatarFallback>AD</AvatarFallback>
                     </Avatar>
-                    <div className="text-left">
-                        <p className="text-sm font-medium">Usuario Admin</p>
-                        <p className="text-xs text-muted-foreground/80">Superadmin</p>
-                    </div>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="right" align="start" className="w-56">
-                <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+            <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Mi Cuenta (Admin)</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem><Settings className="mr-2 h-4 w-4" /><span>Ajustes</span></DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem><LogOut className="mr-2 h-4 w-4" /><span>Cerrar sesión</span></DropdownMenuItem>
             </DropdownMenuContent>
            </DropdownMenu>
-        </SidebarFooter>
-      </Sidebar>
-      <SidebarInset>
-        <header className="flex h-14 items-center justify-between border-b bg-background/80 backdrop-blur-sm px-4 md:justify-end">
-            <SidebarTrigger className="md:hidden"/>
-            <p className="font-semibold text-sm text-muted-foreground hidden md:block">Portal de Administración</p>
-        </header>
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
-            {children}
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+        </div>
+      </header>
+      <main className="flex-1 p-4 md:p-6 lg:p-8">
+          {children}
+      </main>
+    </div>
   );
 }

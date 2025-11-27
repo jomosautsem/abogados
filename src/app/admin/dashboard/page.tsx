@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Users, Briefcase, ClipboardCheck } from "lucide-react";
@@ -6,7 +6,6 @@ import { Users, Briefcase, ClipboardCheck } from "lucide-react";
 const stats = [
     { title: "Clientes Totales", value: "125", icon: Briefcase },
     { title: "Clientes Activos", value: "110", icon: Users },
-    { title: "Tareas Pendientes", value: "32", icon: ClipboardCheck },
 ];
 
 const recentClients = [
@@ -19,9 +18,12 @@ const recentClients = [
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
-      <h1 className="font-headline text-3xl font-bold">Dashboard de Administrador</h1>
+      <div>
+        <h1 className="font-headline text-3xl font-bold">Dashboard de Administrador</h1>
+        <CardDescription>Un resumen de la actividad reciente.</CardDescription>
+      </div>
       
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2">
         {stats.map((stat) => (
           <Card key={stat.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

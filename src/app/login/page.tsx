@@ -7,6 +7,7 @@ import { AdminLoginForm } from '@/components/auth/admin-login-form';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
 import { LoginGraphic } from '@/components/auth/login-graphic';
 import Link from 'next/link';
+import { Logo } from '@/components/logo';
 
 function LoginPageContent() {
   const searchParams = useSearchParams();
@@ -16,6 +17,12 @@ function LoginPageContent() {
     <div className="relative min-h-screen w-full">
         <LoginGraphic />
         <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-background/80 to-background" />
+        
+        <Link href="/" className="absolute top-6 left-6 z-20 flex items-center gap-2 text-foreground transition-opacity hover:opacity-80">
+          <Logo className="w-8 h-8 border-2 border-primary/50" />
+          <span className="font-headline text-xl font-bold">Estrategias Juridicas</span>
+        </Link>
+
         <div className="relative z-10 grid min-h-screen lg:grid-cols-2">
             <div className="hidden lg:block" />
             <div className="flex items-center justify-center p-6 sm:p-12">

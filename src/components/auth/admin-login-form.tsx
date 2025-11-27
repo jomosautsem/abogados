@@ -19,6 +19,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
@@ -30,33 +31,40 @@ export function AdminLoginForm() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const supabase = createClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "admin@test.com",
+      password: "password123",
       remember: false,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if (values.email === "admin@test.com" && values.password === "password123") {
-      toast({
-        title: "Inicio de sesión exitoso",
-        description: "Bienvenido, Administrador.",
-      });
-      router.push('/admin/dashboard');
-    } else {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (error) {
       toast({
         title: "Credenciales incorrectas",
         description: "Por favor, verifica tu email y contraseña.",
         variant: "destructive",
       });
+    } else {
+      toast({
+        title: "Inicio de sesión exitoso",
+        description: "Bienvenido, Administrador.",
+      });
+      router.push('/admin/dashboard');
+      router.refresh();
     }
+    
     setIsLoading(false);
   }
 

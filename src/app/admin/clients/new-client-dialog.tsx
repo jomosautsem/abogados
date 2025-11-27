@@ -26,9 +26,11 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  fullName: z.string().min(1, { message: "El nombre completo es obligatorio." }),
+  full_name: z.string().min(1, { message: "El nombre completo es obligatorio." }),
   address: z.string().min(1, { message: "La dirección es obligatoria." }),
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
 });
@@ -37,11 +39,13 @@ export function NewClientDialog() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const supabase = createClient();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
+      full_name: "",
       address: "",
       email: "",
     },
@@ -49,16 +53,26 @@ export function NewClientDialog() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    console.log("Creando nuevo cliente:", values);
-    // Simular llamada a API
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const { error } = await supabase.from('clients').insert(values);
+
+    if (error) {
+       toast({
+        title: "Error al crear cliente",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Cliente Creado",
+        description: `El cliente "${values.full_name}" ha sido creado exitosamente.`,
+      });
+      setIsOpen(false);
+      form.reset();
+      router.refresh(); // Refresh the page to show the new client
+    }
+   
     setIsLoading(false);
-    setIsOpen(false);
-    form.reset();
-    toast({
-      title: "Cliente Creado",
-      description: `El cliente "${values.fullName}" ha sido creado exitosamente.`,
-    });
   }
 
   return (
@@ -80,7 +94,7 @@ export function NewClientDialog() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
             <FormField
               control={form.control}
-              name="fullName"
+              name="full_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nombre completo</FormLabel>

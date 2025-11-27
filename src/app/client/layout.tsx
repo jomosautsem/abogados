@@ -8,6 +8,7 @@ import { Menu, Home, FolderKanban, MessageSquare, LogOut, Settings } from "lucid
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 const navLinks = [
     { href: "/client/dashboard", label: "Dashboard", icon: Home },
@@ -23,9 +24,12 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const supabase = createClient();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     router.push('/');
+    router.refresh();
   };
 
   return (

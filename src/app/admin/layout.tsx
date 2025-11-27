@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 const navLinks = [
     { href: "/admin/dashboard", label: "Dashboard", icon: Home },
@@ -21,9 +22,12 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const supabase = createClient();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     router.push('/');
+    router.refresh();
   };
   
   return (

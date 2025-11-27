@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { NewClientDialog } from "./new-client-dialog";
 
 export default function ClientsPage() {
     return (
@@ -10,10 +9,7 @@ export default function ClientsPage() {
                 <h1 className="font-headline text-3xl font-bold">Gestión de Clientes</h1>
                 <CardDescription>Vea, edite y gestione los perfiles de sus clientes.</CardDescription>
               </div>
-              <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Nuevo Cliente
-              </Button>
+              <NewClientDialog />
             </div>
             <Card>
                 <CardHeader>

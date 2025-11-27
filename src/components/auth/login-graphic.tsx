@@ -6,14 +6,12 @@ export function LoginGraphic() {
 
   if (!bgImage) {
     return (
-        <div className="relative h-full w-full overflow-hidden bg-muted">
-            <p>Imagen no encontrada</p>
-        </div>
+        <div className="absolute inset-0 w-full h-full bg-muted" />
     )
   }
 
   return (
-    <div className="relative h-full w-full overflow-hidden">
+    <div className="absolute inset-0 w-full h-full">
       <Image
         src={bgImage.imageUrl}
         alt={bgImage.description}
@@ -22,7 +20,6 @@ export function LoginGraphic() {
         className="object-cover"
         data-ai-hint={bgImage.imageHint}
       />
-      <div className="absolute inset-0 bg-background/50" />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminLoginForm } from '@/components/auth/admin-login-form';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
@@ -9,7 +8,7 @@ import { LoginGraphic } from '@/components/auth/login-graphic';
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 
-function LoginPageContent() {
+export default function LoginPage() {
   const searchParams = useSearchParams();
   const defaultTab = searchParams.get('tab') || 'client';
 
@@ -62,12 +61,4 @@ function LoginPageContent() {
         </div>
     </div>
   );
-}
-
-export default function LoginPage() {
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <LoginPageContent />
-        </Suspense>
-    )
 }

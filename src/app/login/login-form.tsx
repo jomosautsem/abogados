@@ -18,7 +18,7 @@ export function LoginForm() {
         <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-background/80 to-background" />
         
         <Link href="/" className="absolute top-6 left-6 z-20 flex items-center gap-2 text-foreground transition-opacity hover:opacity-80">
-          <Logo className="w-8 h-8" />
+          <Logo className="w-12 h-12" />
         </Link>
 
         <div className="relative z-10 grid min-h-screen lg:grid-cols-2">

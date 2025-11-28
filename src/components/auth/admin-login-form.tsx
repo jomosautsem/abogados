@@ -45,55 +45,43 @@ export function AdminLoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    // *** NOTA DE SEGURIDAD IMPORTANTE ***
-    // La comparación de contraseñas del lado del cliente no es segura para producción.
-    // En un entorno real, esto debe manejarse a través de una API segura (como una Supabase Edge Function)
-    // que valide las credenciales en el servidor.
-    // El flujo actual es solo para fines de desarrollo.
-
-    // 1. Verificar si el email corresponde a un admin en nuestra tabla `admin_users`
-    const { data: adminUser, error: adminError } = await supabase
-      .from('admin_users')
-      .select('email, role')
-      .eq('email', values.email)
-      .single();
-
-    if (adminError || !adminUser) {
-      toast({
-        title: "Credenciales de Admin incorrectas",
-        description: "El email no corresponde a un usuario administrador.",
-        variant: "destructive",
+    try {
+      // Llamar a la Edge Function para validar al administrador
+      const { data, error } = await supabase.functions.invoke('admin-login', {
+        body: { email: values.email, password: values.password },
       });
-      setIsLoading(false);
-      return;
-    }
-    
-    // 2. Si el admin existe, iniciar sesión con el usuario de prueba del cliente para obtener una sesión válida.
-    // Este es un workaround para desarrollo. En producción, se usaría un sistema de roles real.
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email: 'client@test.com', 
-        password: 'password123',
-    });
 
-    if (authError || !authData.user) {
+      if (error || data.error) {
+        throw new Error(error?.message || data.error || 'Credenciales de Admin incorrectas');
+      }
+      
+      // Si la validación del admin es exitosa, ahora establecemos la sesión del cliente de prueba
+       const { error: authError } = await supabase.auth.signInWithPassword({
+          email: 'client@test.com', 
+          password: 'password123',
+      });
+
+      if (authError) {
+          throw new Error("No se pudo establecer la sesión de Supabase: " + authError.message);
+      }
+
+      // ¡Éxito! Redirigir al dashboard de admin.
+      toast({
+        title: "Inicio de sesión de Admin exitoso",
+        description: `Bienvenido, ${data.user.role === 'superadmin' ? 'Superadmin' : 'Administrador'}.`,
+      });
+      router.push('/admin/dashboard');
+      router.refresh();
+
+    } catch (e: any) {
         toast({
-            title: "Error de Autenticación",
-            description: "No se pudo establecer una sesión de Supabase. Verifique las credenciales del usuario de prueba.",
+            title: "Error de inicio de sesión",
+            description: e.message || "Ocurrió un error inesperado.",
             variant: "destructive",
         });
+    } finally {
         setIsLoading(false);
-        return;
     }
-    
-    // 3. ¡Éxito! Redirigir al dashboard de admin.
-    toast({
-      title: "Inicio de sesión de Admin exitoso",
-      description: `Bienvenido, ${adminUser.role === 'superadmin' ? 'Superadmin' : 'Administrador'}.`,
-    });
-    router.push('/admin/dashboard');
-    router.refresh();
-    
-    setIsLoading(false);
   }
 
   return (

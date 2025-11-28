@@ -46,30 +46,12 @@ export function AdminLoginForm() {
     setIsLoading(true);
 
     // *** NOTA DE SEGURIDAD IMPORTANTE ***
-    // La siguiente lógica es solo para fines de desarrollo y NO ES SEGURA para producción.
-    // Nunca se debe consultar usuarios y contraseñas (incluso hasheadas) directamente desde el cliente.
+    // La comparación de contraseñas del lado del cliente no es segura para producción.
     // En un entorno real, esto debe manejarse a través de una API segura (como una Supabase Edge Function)
     // que valide las credenciales en el servidor.
-    
-    // Simulación de autenticación personalizada:
-    // 1. Iniciar sesión con un usuario "anónimo" de Supabase Auth para obtener un token de sesión válido.
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email: 'admin@test.com', // Usamos las credenciales genéricas para obtener una sesión
-        password: 'password123',
-    });
+    // El flujo actual es solo para fines de desarrollo.
 
-    if (authError || !authData.user) {
-        toast({
-            title: "Error de Autenticación",
-            description: "No se pudo establecer una sesión segura.",
-            variant: "destructive",
-        });
-        setIsLoading(false);
-        return;
-    }
-    
-    // 2. Verificar si las credenciales coinciden con un admin en nuestra tabla `admin_users`
-    // En un caso real, la comparación del hash de la contraseña se haría en el servidor.
+    // 1. Verificar si el email corresponde a un admin en nuestra tabla `admin_users`
     const { data: adminUser, error: adminError } = await supabase
       .from('admin_users')
       .select('email, role')
@@ -82,15 +64,34 @@ export function AdminLoginForm() {
         description: "El email no corresponde a un usuario administrador.",
         variant: "destructive",
       });
-    } else {
-       // ¡Éxito! (Simulado) - En un caso real, el servidor nos daría una sesión válida.
-      toast({
-        title: "Inicio de sesión de Admin exitoso",
-        description: `Bienvenido, ${adminUser.role === 'superadmin' ? 'Superadmin' : 'Administrador'}.`,
-      });
-      router.push('/admin/dashboard');
-      router.refresh();
+      setIsLoading(false);
+      return;
     }
+    
+    // 2. Si el admin existe, iniciar sesión con el usuario de prueba del cliente para obtener una sesión válida.
+    // Este es un workaround para desarrollo. En producción, se usaría un sistema de roles real.
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email: 'client@test.com', 
+        password: 'password123',
+    });
+
+    if (authError || !authData.user) {
+        toast({
+            title: "Error de Autenticación",
+            description: "No se pudo establecer una sesión de Supabase. Verifique las credenciales del usuario de prueba.",
+            variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+    }
+    
+    // 3. ¡Éxito! Redirigir al dashboard de admin.
+    toast({
+      title: "Inicio de sesión de Admin exitoso",
+      description: `Bienvenido, ${adminUser.role === 'superadmin' ? 'Superadmin' : 'Administrador'}.`,
+    });
+    router.push('/admin/dashboard');
+    router.refresh();
     
     setIsLoading(false);
   }

@@ -3,14 +3,15 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import * as bcrypt from 'https://deno.land/x/bcrypt@v0.4.1/mod.ts';
 
-// CORS Headers para permitir llamadas desde el navegador
+// Cabeceras CORS para permitir llamadas desde cualquier origen (ideal para desarrollo)
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
 serve(async (req) => {
-  // Manejar la solicitud OPTIONS para CORS (preflight)
+  // Manejar la solicitud OPTIONS de preflight para CORS
+  // Esto es crucial para que el navegador permita la solicitud POST.
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -21,7 +22,13 @@ serve(async (req) => {
     // Crear un cliente de Supabase con la clave de servicio para saltarse RLS
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+      {
+         auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
     );
 
     // 1. Buscar al usuario en la tabla admin_users
